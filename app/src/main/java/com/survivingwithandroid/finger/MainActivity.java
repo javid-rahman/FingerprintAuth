@@ -15,11 +15,9 @@ package com.survivingwithandroid.finger;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import com.survivingwithandroid.finger.updateUserEntry;
 import android.app.KeyguardManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyGenParameterSpec.Builder;
 import android.security.keystore.KeyProperties;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,11 +25,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.lang.String;
@@ -103,14 +98,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        updateDB("Priyan");
+        updateJourneyDB( false , "Karapakkam");
 
     }
 
-    public void updateDB(String name) {
-        updateUserEntry user = new updateUserEntry(name);
+    public void updateJourneyDB( boolean entry , String place) {
+        updateJourney psngrDetails = new updateJourney( entry , place );
 
-        databaseRef.child("users").push().setValue("Venkat");
+        if ( entry ) {
+            databaseRef.child("Kishore").push().setValue(psngrDetails);
+        } else {
+            databaseRef.child("Kishore/-L89B58BOa8PdduSCfOJ").child("endPlace").setValue(psngrDetails.endPlace);
+            databaseRef.child("Kishore/-L89B58BOa8PdduSCfOJ").child("endTime").setValue(psngrDetails.endTime);
+        }
     }
 
     private boolean checkFinger() {

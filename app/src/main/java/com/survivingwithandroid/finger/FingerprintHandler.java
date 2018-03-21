@@ -16,27 +16,19 @@ package com.survivingwithandroid.finger;
  * limitations under the License.
  */
 
-import com.survivingwithandroid.finger.updateUserEntry;
-import android.content.Context;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.CancellationSignal;
 import android.widget.TextView;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by francesco on 29/11/16.
  */
 
+
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
     private TextView tv;
-    public String AuthResult = "Fail";
-    public DatabaseReference databaseRef;
+    public static boolean AuthResult = false ;
 
     public FingerprintHandler(TextView tv) {
         this.tv = tv;
@@ -45,8 +37,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     @Override
     public void onAuthenticationError(int errorCode, CharSequence errString) {
         super.onAuthenticationError(errorCode, errString);
-        tv.setText("Auth error");
-        AuthResult = "Fail";
+        tv.setText("Auth Error !!");
     }
 
     @Override
@@ -58,14 +49,15 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     @Override
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
         super.onAuthenticationSucceeded(result);
-        AuthResult = "Success";
-        tv.setText(AuthResult);
+        this.AuthResult = true ;
+        tv.setText("Authentication Successful");
         tv.setTextColor(tv.getContext().getResources().getColor(android.R.color.holo_green_dark));
     }
 
     @Override
     public void onAuthenticationFailed() {
         super.onAuthenticationFailed();
+        tv.setText("Authentication Failed !!");
     }
 
     public void doAuth(FingerprintManager manager, FingerprintManager.CryptoObject obj) {
