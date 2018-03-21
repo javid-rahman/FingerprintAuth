@@ -35,7 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
     private TextView tv;
-    public String AuthResult;
+    public String AuthResult = "Fail";
     public DatabaseReference databaseRef;
 
     public FingerprintHandler(TextView tv) {
@@ -46,7 +46,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     public void onAuthenticationError(int errorCode, CharSequence errString) {
         super.onAuthenticationError(errorCode, errString);
         tv.setText("Auth error");
-        AuthResult = "Failed";
+        AuthResult = "Fail";
     }
 
     @Override

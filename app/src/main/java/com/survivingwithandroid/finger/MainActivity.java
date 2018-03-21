@@ -103,18 +103,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(fph.AuthResult.equalsIgnoreCase("Success")){
-
-            updateDB("Nandha");
-
-        }
+        updateDB("Priyan");
 
     }
 
-    private void updateDB(String name) {
+    public void updateDB(String name) {
         updateUserEntry user = new updateUserEntry(name);
 
-        databaseRef.child("users").setValue(user);
+        databaseRef.child("users").push().setValue("Venkat");
     }
 
     private boolean checkFinger() {
