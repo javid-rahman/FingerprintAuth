@@ -27,6 +27,8 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
 
 import java.io.IOException;
 import java.lang.String;
@@ -43,6 +45,8 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -98,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        updateJourneyDB( false , "Karapakkam");
+        updateJourneyDB( true , "Karapakkam");
 
     }
 
@@ -106,7 +110,12 @@ public class MainActivity extends AppCompatActivity {
         updateJourney psngrDetails = new updateJourney( entry , place );
 
         if ( entry ) {
-            databaseRef.child("Kishore").push().setValue(psngrDetails);
+
+            Random rand = new Random();
+            int  randId = rand.nextInt(10000) + 1;
+
+            databaseRef.child("Kishore").child("journeyId").push().setValue(Integer.toString(randId));
+            databaseRef.child("Kishore").child(Integer.toString(randId)).setValue(psngrDetails);
         } else {
             databaseRef.child("Kishore/-L89B58BOa8PdduSCfOJ").child("endPlace").setValue(psngrDetails.endPlace);
             databaseRef.child("Kishore/-L89B58BOa8PdduSCfOJ").child("endTime").setValue(psngrDetails.endTime);

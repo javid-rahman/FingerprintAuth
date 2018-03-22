@@ -49,7 +49,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     @Override
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
         super.onAuthenticationSucceeded(result);
-        this.AuthResult = true ;
+        AuthResult = true ;
         tv.setText("Authentication Successful");
         tv.setTextColor(tv.getContext().getResources().getColor(android.R.color.holo_green_dark));
     }
